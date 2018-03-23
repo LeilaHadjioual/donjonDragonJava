@@ -11,54 +11,35 @@ public class Jeu {
     public static void main(String[] args) {
         String tableauPersonnage[] = {"magicien", "guerrier"};
         char choice;
-
-//------------------------------affiche la liste des catégories de personnage---------------------------------
-        System.out.println("liste des personnages ");
-        for (int i = 0; i < tableauPersonnage.length; i++) {
-            System.out.println(tableauPersonnage[i]);
-        }
-//-------------------------------------sélection d'un personnage-------------------------------------
+        ArrayList<Personnages> listCharacters = new ArrayList();
         Personnages character = null;
-//
-        do {
-            choice = ' ';
-            System.out.println("Veuillez saisir un personnage :");
-            reponse = sc.nextLine();
-            System.out.println("Vous avez choisi : " + reponse);
 
-            if (reponse.equals("guerrier")) {
-                character = createWarrior();
-
-
-            } else if (reponse.equals("magicien")) {
-                character = createMagician();
-
-            } else {
-                System.out.println("ce personnage n'existe pas");
-
-                do {
-                    System.out.println("Voulez-vous essayer à nouveau ? (Y/N)");
-                    choice = sc.nextLine().charAt(0);
-                } while (choice != 'Y' && choice != 'N');
-
-                if (choice == 'N') {
-                    System.out.println("Au revoir…");
-                }
-            }
-        } while (choice == 'Y');
+//-------------------------------------création d'un personnage-------------------------------------
+        createCharacter(character, listCharacters, tableauPersonnage);
 
 //-----------------------------------------menu pour modifier ou afficher le personnage----------------------------------
         do {
-            System.out.println("Que voulez-vous faire ? \n1-Afficher votre personnage \n2-Modifier votre personnage \n3-Attaquer \n4-Sauvegarder le personnage \n5-Créer un nouveau personnage \n0-Exit");
+            System.out.println("Que voulez-vous faire ? \n1-Afficher un personnage \n2-Modifier votre personnage \n3-Attaquer \n4-Créer un personnage \n0-Exit");
             enterNb = sc.nextInt();
+            sc.nextLine();
 
 //-----------------------------------------------afficher le personnage----------------------------------------------------
             if (enterNb == 1) {
-                System.out.println(character);
+                //Afficher la liste des personnages
+                displayCharacters(listCharacters);
+                //Récupérer le choix de l'utilisateur
+                int persoSelected = sc.nextInt();
+                sc.nextLine();
+                //Afficher le personnage sélectionné
+                System.out.println(listCharacters.get(persoSelected));
             }
 
 //----------------------------------------------modifier le personnage--------------------------------------------------
             if (enterNb == 2) {
+                displayCharacters(listCharacters);
+                int persoSelected = sc.nextInt();
+                sc.nextLine();
+                System.out.println(listCharacters.get(persoSelected));
                 System.out.println("Pour modifier : \n1-Nom  \n2-Image \n3-Niveau vie \n4-Force ");
 
                 if (reponse.equals("guerrier")) {
@@ -68,7 +49,7 @@ public class Jeu {
                 }
                 enterNb = sc.nextInt();
                 sc.nextLine();
-                modifCharacter(character);
+                modifCharacter(listCharacters.get(persoSelected), enterNb);
 //                if (enterNb == 1) {
 //                    System.out.println("vous voulez changer :" + character.name + "\nsaisir le nouveau nom : ");
 //                    String newName = sc.nextLine();
@@ -98,19 +79,15 @@ public class Jeu {
 //                System.out.println("erreur");
 //            }
             if (enterNb == 3) {
-                attack(character);
+                displayCharacters(listCharacters);
+                int persoSelected = sc.nextInt();
+                sc.nextLine();
+                attack(listCharacters.get(persoSelected));
             }
             if (enterNb == 4) {
-//
+                createCharacter(character, listCharacters, tableauPersonnage);
             }
-//            if (enterNb == 5) {
-//                sc.nextLine();
-//                ArrayList al = new ArrayList();
-//                al.add();
-//                for (int i = 0; i < al.size(); i++) {
-//                    System.out.println(i + " : " + al.get(i));
-//                }
-//            }
+
         } while (enterNb != 0);
     }
     //    public String changeName() {
@@ -130,8 +107,50 @@ public class Jeu {
 //            System.out.println("exit");
 //        }return name;
 //    }
+    //--------------------Méthode pour créer un personnage-------------------------------------
+    public static void createCharacter(Personnages character, ArrayList<Personnages> listCharacters, String tableauPersonnage[]){
+        char choice;
 
+        do {
+            choice = ' ';
+            //------------------------------affiche la liste des catégories de personnage---------------------------------
+            System.out.println("liste des personnages ");
+            for (int i = 0; i < tableauPersonnage.length; i++) {
+                System.out.println(tableauPersonnage[i]);
+            }
 
+            System.out.println("Veuillez saisir un personnage :");
+            reponse = sc.nextLine();
+            System.out.println("Vous avez choisi : " + reponse);
+
+            if (reponse.equals("guerrier")) {
+                character = createWarrior(listCharacters);
+
+            } else if (reponse.equals("magicien")) {
+                character = createMagician(listCharacters);
+
+            } else {
+                System.out.println("ce personnage n'existe pas");
+
+                do {
+                    System.out.println("Voulez-vous essayer à nouveau ? (Y/N)");
+                    choice = sc.nextLine().charAt(0);
+                } while (choice != 'Y' && choice != 'N');
+
+                if (choice == 'N') {
+                    System.out.println("Au revoir…");
+                }
+            }
+        } while (choice == 'Y');
+    }
+
+    //-------------------Méthode pour afficher la liste des personnages----------------------------
+    public static void displayCharacters(ArrayList<Personnages> listCharacters){
+        System.out.println("Choisissez un personnage\n");
+        for (int i=0; i < listCharacters.size(); i++){
+            System.out.println(i + ": " + listCharacters.get(i).getName());
+        }
+    }
     //--------------------------ajouter une arme--------------------------------------------------------
     public static String[] addWeapon() { //création d'une méthode qui retourne un tableau de string
         String tabWeapon[] = new String[10]; //création d'un tableau vide de 10 indices max
@@ -217,7 +236,7 @@ public class Jeu {
     }
 
     //--------------------------créer un guerrier-----------------------------------------------------
-    public static Personnages createWarrior() {
+    public static Personnages createWarrior(ArrayList<Personnages> listCharacters) {
         Guerrier guerrier1 = new Guerrier();
         guerrier1.setName(addName());
         guerrier1.setForce(addForce());
@@ -225,12 +244,13 @@ public class Jeu {
         guerrier1.setPicture(addPicture());
         guerrier1.setBouclier(addBouclier());
         guerrier1.setTableauWeapon(addWeapon());
+        listCharacters.add(guerrier1);
 
         return guerrier1;
     }
 
     //--------------------------créer un magicien-----------------------------------------------------
-    public static Personnages createMagician() {
+    public static Personnages createMagician(ArrayList<Personnages> listCharacters) {
         Magicien magicien1 = new Magicien();
         magicien1.setName(addName());
         magicien1.setForce(addForce());
@@ -238,12 +258,13 @@ public class Jeu {
         magicien1.setPicture(addPicture());
         magicien1.setSort(addSort());
         magicien1.setPhiltre(addPhiltre());
+        listCharacters.add(magicien1);
+
         return magicien1;
     }
 
     //--------------------------modifier un personnage-----------------------------------------------------
-    public static void modifCharacter(Personnages p) {
-
+    public static void modifCharacter(Personnages p, int enterNb) {
         switch (enterNb) {
             case 1:
                 System.out.println("vous voulez changer :" + p.getName());
@@ -267,7 +288,6 @@ public class Jeu {
                     if (sc.nextLine().equals("O")) {
                         ((Guerrier) p).setTableauWeapon(addWeapon());
                     }
-
                 } else {
                     System.out.println("vous voulez changer :" + ((Magicien) p).getSort());
                     ((Magicien) p).setSort(addSort());
@@ -285,7 +305,6 @@ public class Jeu {
             default:
         }
     }
-
     //------------------------lancer une attaque--------------------------------------
     public static int attack(Personnages p) {
         System.out.println("votre force d'attaque est de : " + p.getForce() + " \nsaisir un niveau d'attaque inférieur ou égal à " + p.getForce());
@@ -303,46 +322,6 @@ public class Jeu {
         return force;
     }
 
-    //-----------------------sauvegarder un personnage--------------------------------
-//    public static void saveCharacter(Personnages p) {
-//        ArrayList al = new ArrayList();
-//        al.add(name);
-//        al.add(p.getForce());
-//
-//        for (int i = 0; i < al.size(); i++) {
-//            System.out.println(i + " : " + al.get(i));
-//        }
-//    }
-
-//public static void createCharacters(Personnages p){
-//
-//    int choice = ' ';
-//    do {
-//        System.out.println("Veuillez saisir un personnage :");
-//        reponse = sc.nextLine();
-//        System.out.println("Vous avez choisi : " + reponse);
-//
-//        if (reponse.equals("guerrier")) {
-//            p = createWarrior();
-//
-//
-//        } else if (reponse.equals("magicien")) {
-//            p = createMagician();
-//
-//        } else {
-//            System.out.println("ce personnage n'existe pas");
-//
-//            do {
-//                System.out.println("Voulez-vous essayer à nouveau ? (Y/N)");
-//                choice = sc.nextLine().charAt(0);
-//            } while (choice != 'Y' && choice != 'N');
-//
-//            if (choice == 'N') {
-//                System.out.println("Au revoir…");
-//            }
-//        }
-//    } while (choice == 'Y');
-//}
 }
 
 
