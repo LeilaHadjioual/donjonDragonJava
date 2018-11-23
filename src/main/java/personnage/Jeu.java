@@ -3,11 +3,19 @@ package personnage;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * The type Jeu.
+ */
 public class Jeu {
     private static Scanner sc = new Scanner(System.in);
     private static String reponse = "";
     private static int enterNb;
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         String tableauPersonnage[] = {"magicien", "guerrier"};
         char choice;
@@ -90,7 +98,17 @@ public class Jeu {
 
         } while (enterNb != 0);
     }
-    //    public String changeName() {
+
+    /**
+     * Create character.
+     *
+     * @param character         the character
+     * @param listCharacters    the list characters
+     * @param tableauPersonnage the tableau personnage
+     */
+
+
+//    public String changeName() {
 //        Scanner sc = new Scanner(System.in);
 //        Personnages showCharacter = null;
 //        String name = " ";
@@ -102,11 +120,18 @@ public class Jeu {
 //            name = sc.nextLine();
 //            System.out.println("son nouveau nom : " + name);
 //            showCharacter.name = name;
-////                    System.out.println(showCharacter.addName());
+//                    System.out.println(showCharacter.addName());
 //        } else {
 //            System.out.println("exit");
 //        }return name;
 //    }
+
+    /**
+     * Cette méthode sert à créer un personnage
+     * @param character : le personnage créé
+     * @param listCharacters : liste des personnages ou l'on rajoute le personnage créé
+     * @param tableauPersonnage :tableau des differentes catégories de personnage
+     */
     //--------------------Méthode pour créer un personnage-------------------------------------
     public static void createCharacter(Personnages character, ArrayList<Personnages> listCharacters, String tableauPersonnage[]){
         char choice;
@@ -144,14 +169,25 @@ public class Jeu {
         } while (choice == 'Y');
     }
 
-    //-------------------Méthode pour afficher la liste des personnages----------------------------
+    /**
+     * Display characters.
+     *
+     * @param listCharacters the list characters
+     */
+//-------------------Méthode pour afficher la liste des personnages----------------------------
     public static void displayCharacters(ArrayList<Personnages> listCharacters){
         System.out.println("Choisissez un personnage\n");
         for (int i=0; i < listCharacters.size(); i++){
             System.out.println(i + ": " + listCharacters.get(i).getName());
         }
     }
-    //--------------------------ajouter une arme--------------------------------------------------------
+
+    /**
+     * Add weapon string [ ].
+     *
+     * @return the string [ ]
+     */
+//--------------------------ajouter une arme--------------------------------------------------------
     public static String[] addWeapon() { //création d'une méthode qui retourne un tableau de string
         String tabWeapon[] = new String[10]; //création d'un tableau vide de 10 indices max
         int cpt = 1; //création d'un compteur pour pouvoir stopper la saisie du nbr d'arme
@@ -168,7 +204,12 @@ public class Jeu {
         return tabWeapon;
     }
 
-    //--------------------------ajouter un bouclier-----------------------------------------------------
+    /**
+     * Add bouclier string.
+     *
+     * @return the string
+     */
+//--------------------------ajouter un bouclier-----------------------------------------------------
     public static String addBouclier() {
         System.out.println("saisir un bouclier ");
         String bouclier = sc.nextLine();
@@ -186,21 +227,36 @@ public class Jeu {
 //        return choice;
     }
 
-    //--------------------------ajouter un sort-----------------------------------------------------
+    /**
+     * Add sort string.
+     *
+     * @return the string
+     */
+//--------------------------ajouter un sort-----------------------------------------------------
     public static String addSort() {
         System.out.println("ajouter un sort ");
         String sort = sc.nextLine();
         return sort;
     }
 
-    //--------------------------ajouter un philtre----------------------------------------------------
+    /**
+     * Add philtre string.
+     *
+     * @return the string
+     */
+//--------------------------ajouter un philtre----------------------------------------------------
     public static String addPhiltre() {
         System.out.println("ajouter un philtre ");
         String philtre = sc.nextLine();
         return philtre;
     }
 
-    //--------------------------ajouter un nom-----------------------------------------------------
+    /**
+     * Add name string.
+     *
+     * @return the string
+     */
+//--------------------------ajouter un nom-----------------------------------------------------
     public static String addName() {
 
         System.out.println("saisir un nom ");
@@ -209,7 +265,12 @@ public class Jeu {
         return name;
     }
 
-    //--------------------------ajouter vie -----------------------------------------------------
+    /**
+     * Add life int.
+     *
+     * @return the int
+     */
+//--------------------------ajouter vie -----------------------------------------------------
     public static int addLife() {
         System.out.println("niveau vie ?");
         int life = sc.nextInt();
@@ -218,7 +279,12 @@ public class Jeu {
         return life;
     }
 
-    //--------------------------ajouter une image-----------------------------------------------------
+    /**
+     * Add picture string.
+     *
+     * @return the string
+     */
+//--------------------------ajouter une image-----------------------------------------------------
     public static String addPicture() {
         System.out.println("Choisir une image ");
         String picture = sc.nextLine();
@@ -226,7 +292,12 @@ public class Jeu {
         return picture;
     }
 
-    //--------------------------ajouter force-----------------------------------------------------
+    /**
+     * Add force int.
+     *
+     * @return the int
+     */
+//--------------------------ajouter force-----------------------------------------------------
     public static int addForce() {
         System.out.println("Quelle est sa force d'attaque? ");
         int force = sc.nextInt();
@@ -235,7 +306,13 @@ public class Jeu {
         return force;
     }
 
-    //--------------------------créer un guerrier-----------------------------------------------------
+    /**
+     * Create warrior personnages.
+     *
+     * @param listCharacters the list characters
+     * @return the personnages
+     */
+//--------------------------créer un guerrier-----------------------------------------------------
     public static Personnages createWarrior(ArrayList<Personnages> listCharacters) {
         Guerrier guerrier1 = new Guerrier();
         guerrier1.setName(addName());
@@ -249,7 +326,13 @@ public class Jeu {
         return guerrier1;
     }
 
-    //--------------------------créer un magicien-----------------------------------------------------
+    /**
+     * Create magician personnages.
+     *
+     * @param listCharacters the list characters
+     * @return the personnages
+     */
+//--------------------------créer un magicien-----------------------------------------------------
     public static Personnages createMagician(ArrayList<Personnages> listCharacters) {
         Magicien magicien1 = new Magicien();
         magicien1.setName(addName());
@@ -263,7 +346,13 @@ public class Jeu {
         return magicien1;
     }
 
-    //--------------------------modifier un personnage-----------------------------------------------------
+    /**
+     * Modif character.
+     *
+     * @param p       the p
+     * @param enterNb the enter nb
+     */
+//--------------------------modifier un personnage-----------------------------------------------------
     public static void modifCharacter(Personnages p, int enterNb) {
         switch (enterNb) {
             case 1:
@@ -305,7 +394,14 @@ public class Jeu {
             default:
         }
     }
-    //------------------------lancer une attaque--------------------------------------
+
+    /**
+     * Attack int.
+     *
+     * @param p the p
+     * @return the int
+     */
+//------------------------lancer une attaque--------------------------------------
     public static int attack(Personnages p) {
         System.out.println("votre force d'attaque est de : " + p.getForce() + " \nsaisir un niveau d'attaque inférieur ou égal à " + p.getForce());
         int attackLevel = sc.nextInt();

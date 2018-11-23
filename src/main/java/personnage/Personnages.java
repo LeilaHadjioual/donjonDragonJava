@@ -1,6 +1,9 @@
 package personnage;
 
 
+/**
+ * The type Personnages.
+ */
 public class Personnages {
 
     private String name;
@@ -35,37 +38,77 @@ public class Personnages {
 //    }
 
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
 
+    /**
+     * Gets life.
+     *
+     * @return the life
+     */
     public int getLife() {
         return life;
     }
 
+    /**
+     * Sets life.
+     *
+     * @param life the life
+     */
     public void setLife(int life) {
         this.life = life;
     }
 
 
+    /**
+     * Gets picture.
+     *
+     * @return the picture
+     */
     public String getPicture() {
         return picture;
     }
 
+    /**
+     * Sets picture.
+     *
+     * @param picture the picture
+     */
     public void setPicture(String picture) {
         this.picture = picture;
     }
 
 
+    /**
+     * Gets force.
+     *
+     * @return the force
+     */
     public int getForce() {
         return force;
     }
 
+    /**
+     * Sets force.
+     *
+     * @param force the force
+     */
     public void setForce(int force) {
         this.force = force;
     }
